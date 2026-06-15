@@ -102,4 +102,4 @@ Plans mirror specs: `DOCS/PLANS/plan-*.md`. Implementation order: 1 → 2 → 4 
 
 ## .gitignore
 
-The current `.gitignore` is a Java template placeholder. Replace it with patterns appropriate for the tech stack (e.g., `node_modules`, `.env`, `dist`, `target/`, `*.class`, `data/` for H2 database files).
+The current `.gitignore` is a Java template placeholder. Replace it with patterns appropriate for the tech stack (e.g., `node_modules`, `.env`, `dist`, `build/`, `*.class`, `data/` for H2 database files).
