@@ -1,5 +1,5 @@
 import { apiFetch, ApiError } from './client';
-import type { Budget, BudgetRequest, Expense, ExpenseRequest, Category, CategoryRequest, ConversionResult, RatesResponse, ExpenseHistoryPage, CategorySummaryItem, MonthlySummaryItem, BudgetLimit, LimitRequest, LimitStatus, SimulationRequest, SimulationResult } from './types';
+import type { Budget, BudgetRequest, Expense, ExpenseRequest, Category, CategoryRequest, ConversionResult, RatesResponse, ExpenseHistoryPage, CategorySummaryItem, MonthlySummaryItem, BudgetLimit, LimitRequest, LimitStatus, SimulationRequest, SimulationResult, AnalysisResponse } from './types';
 
 export function getBudgets(): Promise<Budget[]> {
   return apiFetch<Budget[]>('/budgets');
@@ -129,4 +129,8 @@ export function simulateSavings(data: SimulationRequest): Promise<SimulationResu
     method: 'POST',
     body: JSON.stringify(data),
   });
+}
+
+export function getAnalysis(budgetId: number): Promise<AnalysisResponse> {
+  return apiFetch<AnalysisResponse>(`/analysis/suggestions?budgetId=${budgetId}`);
 }

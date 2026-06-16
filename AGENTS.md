@@ -62,7 +62,7 @@ Feature plans from the DOCS map to feature directories under `frontend/src/`:
 | history | `frontend/src/pages/HistoryPage.tsx` | Done | foundation, budget-core |
 | limits | `frontend/src/pages/LimitsPage.tsx` | Done | foundation, budget-core |
 | simulation | `frontend/src/pages/SimulationPage.tsx` | Done | foundation |
-| analysis | `frontend/src/pages/AnalysisPage.tsx` | Not started | foundation, budget-core |
+| analysis | `frontend/src/pages/AnalysisPage.tsx` | Done | foundation, budget-core |
 
 ### Implementation Order (Frontend)
 

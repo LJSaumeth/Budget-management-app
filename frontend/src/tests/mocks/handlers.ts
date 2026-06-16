@@ -217,4 +217,22 @@ export const handlers = [
       adjustedMonthlyExpenses: adjusted, currentSavings, ...baseline,
     });
   }),
+
+  http.get('/api/analysis/suggestions', () => {
+    return HttpResponse.json({
+      suggestions: [
+        {
+          categoryId: 1,
+          categoryName: 'Food',
+          currentMonthlyAvg: 546.67,
+          suggestedReductionPercent: 11.8,
+          monthlySaving: 73.33,
+          annualSaving: 879.96,
+          reasoning: 'Food spending ($620.00) is 11.8% above your 3-month average ($546.67). Reducing to $546.67 would save $73.33/month.',
+        },
+      ],
+      message: 'Analysis complete. Found 1 optimization opportunities.',
+      totalPotentialAnnualSaving: 879.96,
+    });
+  }),
 ];

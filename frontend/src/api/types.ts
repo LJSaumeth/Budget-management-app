@@ -131,3 +131,19 @@ export interface SimulationResult {
   baselineProjectedSavings?: number;
   differenceFromBaseline?: number;
 }
+
+export interface OptimizationSuggestion {
+  categoryId: number;
+  categoryName: string;
+  currentMonthlyAvg: number;
+  suggestedReductionPercent: number;
+  monthlySaving: number;
+  annualSaving: number;
+  reasoning: string;
+}
+
+export interface AnalysisResponse {
+  suggestions: OptimizationSuggestion[];
+  message: string;
+  totalPotentialAnnualSaving: number;
+}
