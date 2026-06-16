@@ -40,3 +40,18 @@ export interface Category {
 export interface CategoryRequest {
   name: string;
 }
+
+export interface ConversionResult {
+  from: string;
+  to: string;
+  amount: number;
+  rate: number;
+  result: number;
+  fetchedAt: string;
+}
+
+export interface RatesResponse {
+  base: string;
+  rates: Record<string, number>;
+  fetchedAt: string;
+}

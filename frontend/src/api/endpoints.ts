@@ -1,5 +1,5 @@
 import { apiFetch, ApiError } from './client';
-import type { Budget, BudgetRequest, Expense, ExpenseRequest, Category, CategoryRequest } from './types';
+import type { Budget, BudgetRequest, Expense, ExpenseRequest, Category, CategoryRequest, ConversionResult, RatesResponse } from './types';
 
 export function getBudgets(): Promise<Budget[]> {
   return apiFetch<Budget[]>('/budgets');
@@ -65,3 +65,13 @@ export function createCategory(data: CategoryRequest): Promise<Category> {
 }
 
 export { ApiError };
+
+export function getRates(base: string): Promise<RatesResponse> {
+  return apiFetch<RatesResponse>(`/exchange/rates?base=${encodeURIComponent(base)}`);
+}
+
+export function convert(amount: number, from: string, to: string): Promise<ConversionResult> {
+  return apiFetch<ConversionResult>(
+    `/exchange/convert?amount=${amount}&from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}`,
+  );
+}
