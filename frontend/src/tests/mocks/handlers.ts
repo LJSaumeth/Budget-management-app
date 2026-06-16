@@ -151,4 +151,46 @@ export const handlers = [
       { categoryId: 3, categoryName: 'Entertainment', totalAmount: 50, expenseCount: 1, percentage: 12.5 },
     ]);
   }),
+
+  http.get('/api/limits', ({ request }) => {
+    const url = new URL(request.url);
+    const budgetId = Number(url.searchParams.get('budgetId'));
+    return HttpResponse.json([
+      { id: 1, budgetId, amount: 1000, period: 'MONTHLY', warningThresholdPercent: 80, createdAt: '2026-06-01T00:00:00Z' },
+    ]);
+  }),
+
+  http.get('/api/limits/:id/status', () => {
+    return HttpResponse.json({
+      limitId: 1,
+      budgetId: 1,
+      limitAmount: 1000,
+      spentAmount: 600,
+      remainingAmount: 400,
+      percentageUsed: 60,
+      status: 'OK',
+      period: 'MONTHLY',
+      periodStart: '2026-06-01',
+      periodEnd: '2026-06-30',
+    });
+  }),
+
+  http.post('/api/limits', async ({ request }) => {
+    const body = await request.json() as Record<string, unknown>;
+    return HttpResponse.json({
+      id: Date.now(),
+      budgetId: body.budgetId,
+      amount: body.amount,
+      period: body.period,
+      warningThresholdPercent: body.warningThresholdPercent,
+      createdAt: new Date().toISOString(),
+    }, { status: 201 });
+  }),
+
+  http.put('/api/limits/:id', async ({ params, request }) => {
+    const body = await request.json() as Record<string, unknown>;
+    return HttpResponse.json({ id: Number(params.id), ...body });
+  }),
+
+  http.delete('/api/limits/:id', () => new HttpResponse(null, { status: 204 })),
 ];
