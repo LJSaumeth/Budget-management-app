@@ -144,7 +144,7 @@ Implement rates listing first because the convert endpoint (US1) depends on the 
 - [ ] T008 Create `ExchangeServiceTest.java` — mock `Fawazahmed0ApiClient`, verify cache hit/miss logic, TTL expiry, same-currency short-circuit
 - [ ] T009 Create `ExchangeControllerTest.java` — `@WebMvcTest`, mock `ExchangeService`, test valid/invalid base, mock API failure → 503
 
-**Checkpoint**: Rate listing works. `mvn test -Dtest=ExchangeControllerTest,ExchangeServiceTest`
+**Checkpoint**: Rate listing works. `./gradlew test --tests "*ExchangeControllerTest" --tests "*ExchangeServiceTest"`
 
 ---
 
@@ -177,7 +177,7 @@ Implement rates listing first because the convert endpoint (US1) depends on the 
 - [ ] T013 Add convert tests to `ExchangeControllerTest.java`: valid conversion, amount ≤ 0 → 400, unsupported currency → 400, same-currency → 200 (no API call)
 - [ ] T014 Add convert tests to `ExchangeServiceTest.java`: same-currency bypass, missing rate in map, cache TTL validation
 
-**Checkpoint**: Full exchange module operational. `mvn test -Dtest="ExchangeControllerTest,ExchangeServiceTest"`
+**Checkpoint**: Full exchange module operational. `./gradlew test --tests "*ExchangeControllerTest" --tests "*ExchangeServiceTest"`
 
 ---
 

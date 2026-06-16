@@ -14,7 +14,7 @@ Implement the foundational budget-core module — the heart of the application. 
 **Storage**: H2 embedded (file-based: `./data/budgetdb`)
 **Testing**: JUnit 5 + MockMvc + H2 in-memory test DB
 **Target Platform**: Local JVM (single-user desktop app)
-**Project Type**: Single Maven project with package-level module separation
+**Project Type**: Single Gradle project with package-level module separation
 **Architecture**: Hexagonal modular monolith — ports/adapters pattern
 **Constraints**: No external services, no authentication, embedded-only
 
@@ -34,7 +34,7 @@ DOCS/
 
 ```text
 backend/
-├── pom.xml
+├── build.gradle
 ├── src/main/java/com/budgetapp/
 │   ├── BudgetApplication.java
 │   ├── shared/
@@ -88,7 +88,7 @@ backend/
                 └── CategoryControllerTest.java
 ```
 
-**Structure Decision**: Single Maven project with package-level module separation. A multi-module Maven build adds overhead without benefit for a single-deployable monolith. Module boundaries are enforced by convention — each module owns its `domain/`, `application/`, and `infrastructure/` packages, and cross-module access goes through ports only.
+**Structure Decision**: Single Gradle project with package-level module separation. A multi-module Gradle build adds overhead without benefit for a single-deployable monolith. Module boundaries are enforced by convention — each module owns its `domain/`, `application/`, and `infrastructure/` packages, and cross-module access goes through ports only.
 
 ---
 
@@ -157,11 +157,11 @@ backend/
 **Purpose**: Project initialization and toolchain configuration
 
 - [ ] T001 Create `backend/` directory structure per the layout above
-- [ ] T002 Initialize Maven project with `pom.xml` — Spring Boot parent, dependencies (spring-boot-starter-web, spring-boot-starter-data-jpa, h2, lombok, spring-boot-starter-validation, spring-boot-starter-test)
+- [ ] T002 Initialize Gradle project with `build.gradle` — Spring Boot plugin, dependencies (spring-boot-starter-web, spring-boot-starter-data-jpa, h2, lombok, spring-boot-starter-validation, spring-boot-starter-test)
 - [ ] T003 Create `BudgetApplication.java` — Spring Boot entry point with `@SpringBootApplication`
 - [ ] T004 Configure `application.yml` — H2 file-based datasource (`jdbc:h2:file:./data/budgetdb`), JPA `ddl-auto: update`, H2 console enabled, server port 8080
 - [ ] T005 Create `data.sql` — seed the 9 default categories (Food, Transport, Entertainment, Housing, Health, Education, Shopping, Utilities, Other) using `INSERT ... WHERE NOT EXISTS` to be idempotent
-- [ ] T006 Update `.gitignore` — add H2 data directory (`data/`), Maven target (`target/`), IDE files (`.idea/`, `*.iml`), keep existing Java patterns
+- [ ] T006 Update `.gitignore` — add H2 data directory (`data/`), Gradle build (`build/`), IDE files (`.idea/`, `*.iml`), keep existing Java patterns
 
 ---
 
@@ -233,7 +233,7 @@ backend/
 - [ ] T018 [US1] Create `BudgetControllerTest.java` — `@WebMvcTest(BudgetController.class)`, MockMvc tests for all 5 endpoints covering success + 404 + 400 cases
 - [ ] T019 [US1] Create `BudgetServiceTest.java` — unit tests with mocked repository
 
-**Checkpoint**: Budget CRUD fully functional. Test with `mvn test -Dtest=BudgetControllerTest`
+**Checkpoint**: Budget CRUD fully functional. Test with `./gradlew test --tests "*BudgetControllerTest"`
 
 ---
 
@@ -275,7 +275,7 @@ backend/
 - [ ] T026 [US3] Create `CategoryControllerTest.java` — MockMvc tests: CRUD success, duplicate name → 409, delete in-use → 409
 - [ ] T027 [US3] Create `CategoryServiceTest.java`
 
-**Checkpoint**: Categories CRUD working. Test with `mvn test -Dtest=CategoryControllerTest`
+**Checkpoint**: Categories CRUD working. Test with `./gradlew test --tests "*CategoryControllerTest"`
 
 ---
 
@@ -325,13 +325,13 @@ backend/
 - [ ] T035 [US2] Create `ExpenseControllerTest.java` — MockMvc: CRUD success, non-existent budgetId → 404, non-existent categoryId → 400, amount ≤ 0 → 400
 - [ ] T036 [US2] Create `ExpenseServiceTest.java`
 
-**Checkpoint**: Full budget-core module operational. Run `mvn test` — all 6 test classes pass.
+**Checkpoint**: Full budget-core module operational. Run `./gradlew test` — all 6 test classes pass.
 
 ---
 
 ## Phase 6: Polish & Cross-Cutting Concerns
 
-- [ ] T037 Run full test suite: `mvn test`
+- [ ] T037 Run full test suite: `./gradlew test`
 - [ ] T038 Verify H2 console accessible at `http://localhost:8080/h2-console`
 - [ ] T039 Verify `data.sql` seeds categories on clean startup
 - [ ] T040 Verify cascade delete: deleting a budget removes its expenses

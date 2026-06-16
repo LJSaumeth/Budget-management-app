@@ -1,0 +1,9 @@
+MERGE INTO category (id, name) KEY(name) VALUES (1, 'Food');
+MERGE INTO category (id, name) KEY(name) VALUES (2, 'Transport');
+MERGE INTO category (id, name) KEY(name) VALUES (3, 'Entertainment');
+MERGE INTO category (id, name) KEY(name) VALUES (4, 'Housing');
+MERGE INTO category (id, name) KEY(name) VALUES (5, 'Health');
+MERGE INTO category (id, name) KEY(name) VALUES (6, 'Education');
+MERGE INTO category (id, name) KEY(name) VALUES (7, 'Shopping');
+MERGE INTO category (id, name) KEY(name) VALUES (8, 'Utilities');
+MERGE INTO category (id, name) KEY(name) VALUES (9, 'Other');
