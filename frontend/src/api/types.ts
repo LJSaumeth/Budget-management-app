@@ -77,3 +77,32 @@ export interface MonthlySummaryItem {
   totalAmount: number;
   expenseCount: number;
 }
+
+export interface BudgetLimit {
+  id: number;
+  budgetId: number;
+  amount: number;
+  period: 'WEEKLY' | 'MONTHLY' | 'ANNUAL';
+  warningThresholdPercent: number;
+  createdAt: string;
+}
+
+export interface LimitRequest {
+  budgetId: number;
+  amount: number;
+  period: 'WEEKLY' | 'MONTHLY' | 'ANNUAL';
+  warningThresholdPercent: number;
+}
+
+export interface LimitStatus {
+  limitId: number;
+  budgetId: number;
+  limitAmount: number;
+  spentAmount: number;
+  remainingAmount: number;
+  percentageUsed: number;
+  status: 'OK' | 'WARNING' | 'EXCEEDED';
+  period: string;
+  periodStart: string;
+  periodEnd: string;
+}

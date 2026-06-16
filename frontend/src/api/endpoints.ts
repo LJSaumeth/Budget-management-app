@@ -1,5 +1,5 @@
 import { apiFetch, ApiError } from './client';
-import type { Budget, BudgetRequest, Expense, ExpenseRequest, Category, CategoryRequest, ConversionResult, RatesResponse, ExpenseHistoryPage, CategorySummaryItem, MonthlySummaryItem } from './types';
+import type { Budget, BudgetRequest, Expense, ExpenseRequest, Category, CategoryRequest, ConversionResult, RatesResponse, ExpenseHistoryPage, CategorySummaryItem, MonthlySummaryItem, BudgetLimit, LimitRequest, LimitStatus } from './types';
 
 export function getBudgets(): Promise<Budget[]> {
   return apiFetch<Budget[]>('/budgets');
@@ -102,4 +102,24 @@ export function getMonthlySummary(budgetId: number, year: number, start?: string
   if (start) params.set('startDate', start);
   if (end) params.set('endDate', end);
   return apiFetch<MonthlySummaryItem[]>(`/expenses/summary?${params}`);
+}
+
+export function getLimits(budgetId: number): Promise<BudgetLimit[]> {
+  return apiFetch<BudgetLimit[]>(`/limits?budgetId=${budgetId}`);
+}
+
+export function getLimitStatus(limitId: number): Promise<LimitStatus> {
+  return apiFetch<LimitStatus>(`/limits/${limitId}/status`);
+}
+
+export function createLimit(data: LimitRequest): Promise<BudgetLimit> {
+  return apiFetch<BudgetLimit>('/limits', { method: 'POST', body: JSON.stringify(data) });
+}
+
+export function updateLimit(id: number, data: LimitRequest): Promise<BudgetLimit> {
+  return apiFetch<BudgetLimit>(`/limits/${id}`, { method: 'PUT', body: JSON.stringify(data) });
+}
+
+export function deleteLimit(id: number): Promise<void> {
+  return apiFetch<void>(`/limits/${id}`, { method: 'DELETE' });
 }
