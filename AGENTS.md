@@ -29,7 +29,7 @@ Module directories from the AGENTS.md plan map to Java packages under `com.budge
 | budget-core | `budgetcore` | Done |
 | exchange | `exchange` | Not started |
 | limits | `limits` | Done |
-| simulation | `simulation` | Not started |
+| simulation | `simulation` | Done |
 | analysis | `analysis` | Done |
 | history | `history` | Done |
 | shared | `shared` | Done (cross-cutting) |
@@ -38,7 +38,7 @@ Each module follows: `domain/` → `application/` → `infrastructure/`. Domain 
 
 **Exception**: `history` has no `domain/` directory — it depends on `budgetcore.domain.port.*` (especially `ExpenseQueryPort`) instead of defining its own.
 
-Remaining modules to implement: exchange → simulation.
+Remaining modules to implement: exchange.
 
 ## Key Conventions
 
