@@ -38,3 +38,10 @@ analysis:
   min-months: 2
   overspend-threshold-percent: 10
   max-suggestions: 5
+
+exchange:
+  cache:
+    ttl-hours: 10
+  api:
+    base-url: https://cdn.jsdelivr.net/npm/@fawazahmed0/currency-api@latest/v1
+    timeout-seconds: 10
