@@ -102,4 +102,32 @@ export const handlers = [
     return HttpResponse.json({ id: Number(params.id), ...body });
   }),
   http.delete('/api/expenses/:id', () => new HttpResponse(null, { status: 204 })),
+
+  http.get('/api/exchange/rates', ({ request }) => {
+    const url = new URL(request.url);
+    const base = url.searchParams.get('base') ?? 'USD';
+    return HttpResponse.json({
+      base,
+      rates: { EUR: 0.92, GBP: 0.79, JPY: 150.5 },
+      fetchedAt: '2026-06-15T12:00:00Z',
+    });
+  }),
+
+  http.get('/api/exchange/convert', ({ request }) => {
+    const url = new URL(request.url);
+    const amount = Number(url.searchParams.get('amount'));
+    const from = url.searchParams.get('from') ?? 'USD';
+    const to = url.searchParams.get('to') ?? 'EUR';
+    const rates: Record<string, number> = { EUR: 0.92, GBP: 0.79 };
+    const rate = from.toUpperCase() === to.toUpperCase() ? 1 : (rates[to.toUpperCase()] ?? 1);
+
+    return HttpResponse.json({
+      from: from.toUpperCase(),
+      to: to.toUpperCase(),
+      amount,
+      rate,
+      result: Number((amount * rate).toFixed(2)),
+      fetchedAt: '2026-06-15T12:00:00Z',
+    });
+  }),
 ];
