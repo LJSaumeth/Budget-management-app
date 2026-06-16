@@ -1,5 +1,5 @@
 import { apiFetch, ApiError } from './client';
-import type { Budget, BudgetRequest, Expense, ExpenseRequest, Category, CategoryRequest, ConversionResult, RatesResponse } from './types';
+import type { Budget, BudgetRequest, Expense, ExpenseRequest, Category, CategoryRequest, ConversionResult, RatesResponse, ExpenseHistoryPage, CategorySummaryItem, MonthlySummaryItem } from './types';
 
 export function getBudgets(): Promise<Budget[]> {
   return apiFetch<Budget[]>('/budgets');
@@ -74,4 +74,32 @@ export function convert(amount: number, from: string, to: string): Promise<Conve
   return apiFetch<ConversionResult>(
     `/exchange/convert?amount=${amount}&from=${encodeURIComponent(from)}&to=${encodeURIComponent(to)}`,
   );
+}
+
+export function getExpenseHistory(
+  budgetId: number,
+  filter?: { startDate?: string; endDate?: string; categoryId?: number; search?: string },
+  page = 0,
+  size = 20,
+): Promise<ExpenseHistoryPage> {
+  const params = new URLSearchParams({ budgetId: String(budgetId), page: String(page), size: String(size) });
+  if (filter?.startDate) params.set('startDate', filter.startDate);
+  if (filter?.endDate) params.set('endDate', filter.endDate);
+  if (filter?.categoryId) params.set('categoryId', String(filter.categoryId));
+  if (filter?.search) params.set('search', filter.search);
+  return apiFetch<ExpenseHistoryPage>(`/expenses/history?${params}`);
+}
+
+export function getCategorySummary(budgetId: number, start?: string, end?: string): Promise<CategorySummaryItem[]> {
+  const params = new URLSearchParams({ budgetId: String(budgetId), groupBy: 'category' });
+  if (start) params.set('startDate', start);
+  if (end) params.set('endDate', end);
+  return apiFetch<CategorySummaryItem[]>(`/expenses/summary?${params}`);
+}
+
+export function getMonthlySummary(budgetId: number, year: number, start?: string, end?: string): Promise<MonthlySummaryItem[]> {
+  const params = new URLSearchParams({ budgetId: String(budgetId), groupBy: 'month', year: String(year) });
+  if (start) params.set('startDate', start);
+  if (end) params.set('endDate', end);
+  return apiFetch<MonthlySummaryItem[]>(`/expenses/summary?${params}`);
 }

@@ -55,3 +55,25 @@ export interface RatesResponse {
   rates: Record<string, number>;
   fetchedAt: string;
 }
+
+export interface ExpenseHistoryPage {
+  content: Expense[];
+  totalElements: number;
+  totalPages: number;
+  page: number;
+  size: number;
+}
+
+export interface CategorySummaryItem {
+  categoryId: number;
+  categoryName: string;
+  totalAmount: number;
+  expenseCount: number;
+  percentage: number;
+}
+
+export interface MonthlySummaryItem {
+  month: string;
+  totalAmount: number;
+  expenseCount: number;
+}

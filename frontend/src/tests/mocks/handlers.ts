@@ -130,4 +130,25 @@ export const handlers = [
       fetchedAt: '2026-06-15T12:00:00Z',
     });
   }),
+
+  http.get('/api/expenses/history', ({ request }) => {
+    const url = new URL(request.url);
+    const budgetId = Number(url.searchParams.get('budgetId'));
+    const expenses = sampleExpenses.filter((e) => e.budgetId === budgetId);
+    return HttpResponse.json({
+      content: expenses,
+      totalElements: expenses.length,
+      totalPages: Math.ceil(expenses.length / 20),
+      page: Number(url.searchParams.get('page')) || 0,
+      size: Number(url.searchParams.get('size')) || 20,
+    });
+  }),
+
+  http.get('/api/expenses/summary', () => {
+    return HttpResponse.json([
+      { categoryId: 1, categoryName: 'Food', totalAmount: 250, expenseCount: 5, percentage: 62.5 },
+      { categoryId: 2, categoryName: 'Transport', totalAmount: 100, expenseCount: 2, percentage: 25 },
+      { categoryId: 3, categoryName: 'Entertainment', totalAmount: 50, expenseCount: 1, percentage: 12.5 },
+    ]);
+  }),
 ];
