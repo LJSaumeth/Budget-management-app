@@ -193,4 +193,28 @@ export const handlers = [
   }),
 
   http.delete('/api/limits/:id', () => new HttpResponse(null, { status: 204 })),
+
+  http.post('/api/simulations/savings', async ({ request }) => {
+    const body = await request.json() as Record<string, unknown>;
+    const income = Number(body.monthlyIncome) || 0;
+    const originalExpenses = Number(body.monthlyExpenses) || 0;
+    const months = Number(body.months) || 0;
+    const currentSavings = body.currentSavings != null ? Number(body.currentSavings) : 0;
+    const changes = (body.expectedChanges as { reductionAmount: number }[]) ?? [];
+
+    const totalReduction = changes.reduce((s, c) => s + (c.reductionAmount || 0), 0);
+    const adjusted = Math.max(0, originalExpenses - totalReduction);
+    const monthlySavings = income - adjusted;
+    const projected = currentSavings + monthlySavings * months;
+
+    const baseline = changes.length > 0
+      ? { baselineProjectedSavings: currentSavings + (income - originalExpenses) * months, differenceFromBaseline: projected - (currentSavings + (income - originalExpenses) * months) }
+      : {};
+
+    return HttpResponse.json({
+      monthlySavings, projectedSavings: projected, months,
+      monthlyIncome: income, monthlyExpenses: originalExpenses,
+      adjustedMonthlyExpenses: adjusted, currentSavings, ...baseline,
+    });
+  }),
 ];

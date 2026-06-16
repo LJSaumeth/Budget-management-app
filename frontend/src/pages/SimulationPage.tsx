@@ -1,7 +1,10 @@
+import SimulationForm from '@/components/simulation/SimulationForm';
+
 export default function SimulationPage() {
   return (
-    <div className="flex items-center justify-center h-64">
-      <h2 className="font-hand text-3xl text-brown">Simulation</h2>
+    <div>
+      <h1 className="font-hand text-3xl text-ink mb-4">Savings Simulation</h1>
+      <SimulationForm />
     </div>
   );
 }

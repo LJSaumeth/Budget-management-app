@@ -1,5 +1,5 @@
 import { apiFetch, ApiError } from './client';
-import type { Budget, BudgetRequest, Expense, ExpenseRequest, Category, CategoryRequest, ConversionResult, RatesResponse, ExpenseHistoryPage, CategorySummaryItem, MonthlySummaryItem, BudgetLimit, LimitRequest, LimitStatus } from './types';
+import type { Budget, BudgetRequest, Expense, ExpenseRequest, Category, CategoryRequest, ConversionResult, RatesResponse, ExpenseHistoryPage, CategorySummaryItem, MonthlySummaryItem, BudgetLimit, LimitRequest, LimitStatus, SimulationRequest, SimulationResult } from './types';
 
 export function getBudgets(): Promise<Budget[]> {
   return apiFetch<Budget[]>('/budgets');
@@ -122,4 +122,11 @@ export function updateLimit(id: number, data: LimitRequest): Promise<BudgetLimit
 
 export function deleteLimit(id: number): Promise<void> {
   return apiFetch<void>(`/limits/${id}`, { method: 'DELETE' });
+}
+
+export function simulateSavings(data: SimulationRequest): Promise<SimulationResult> {
+  return apiFetch<SimulationResult>('/simulations/savings', {
+    method: 'POST',
+    body: JSON.stringify(data),
+  });
 }
