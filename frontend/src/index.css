@@ -1,0 +1,19 @@
+@import url('https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap');
+@import 'tailwindcss';
+
+@theme {
+  --font-hand: 'Patrick Hand', Georgia, serif;
+  --color-paper: #F7F1DE;
+  --color-sage: #B0BA99;
+  --color-brown: #9D6638;
+  --color-ink: #4E220F;
+  --color-red-ink: #cc3333;
+}
+
+body {
+  margin: 0;
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-family: system-ui, sans-serif;
+  min-height: 100vh;
+}
