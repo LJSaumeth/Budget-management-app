@@ -33,3 +33,8 @@ app:
 
 limits:
   default-warning-threshold: 80
+
+analysis:
+  min-months: 2
+  overspend-threshold-percent: 10
+  max-suggestions: 5

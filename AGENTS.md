@@ -16,7 +16,9 @@ All commands run from the `backend/` directory.
 - **Backend**: Java 25, Spring Boot 3.5.0, Lombok, H2 (embedded file DB at `./data/budgetdb`)
 - **Build**: Single Gradle project (`backend/build.gradle`) — NOT a multi-module build
 - **Architecture**: Hexagonal (ports/adapters) — modules are Java packages, not separate Gradle subprojects
-- **Test**: JUnit 5 + Mockito (`@ExtendWith(MockitoExtension.class)`) + AssertJ assertions
+- **Test**: JUnit 5 + Mockito + AssertJ assertions.
+  - Service tests: `@ExtendWith(MockitoExtension.class)`, no Spring context
+  - Controller tests: `@WebMvcTest` + `@MockitoBean`, uses Spring context
 
 ## Module Map
 
@@ -26,15 +28,17 @@ Module directories from the AGENTS.md plan map to Java packages under `com.budge
 |---|---|---|
 | budget-core | `budgetcore` | Done |
 | exchange | `exchange` | Not started |
-| limits | `limits` | In progress |
+| limits | `limits` | Done |
 | simulation | `simulation` | Not started |
-| analysis | `analysis` | Not started |
-| history | `history` | Not started |
+| analysis | `analysis` | Done |
+| history | `history` | Done |
 | shared | `shared` | Done (cross-cutting) |
 
 Each module follows: `domain/` → `application/` → `infrastructure/`. Domain ports (interfaces like `ExpenseQueryPort`) live in `domain/port/`. Infrastructure adapters (REST controllers, JPA repos) implement them.
 
-Implementation order: 1 (budget-core) → 2 (exchange) → 4 (limits) → 5 (simulation) → 6 (analysis) → 3 (history).
+**Exception**: `history` has no `domain/` directory — it depends on `budgetcore.domain.port.*` (especially `ExpenseQueryPort`) instead of defining its own.
+
+Remaining modules to implement: exchange → simulation.
 
 ## Key Conventions
 
