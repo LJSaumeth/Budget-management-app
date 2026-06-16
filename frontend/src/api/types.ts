@@ -106,3 +106,28 @@ export interface LimitStatus {
   periodStart: string;
   periodEnd: string;
 }
+
+export interface CategoryChange {
+  category: string;
+  reductionAmount: number;
+}
+
+export interface SimulationRequest {
+  monthlyIncome: number;
+  monthlyExpenses: number;
+  months: number;
+  currentSavings?: number;
+  expectedChanges?: CategoryChange[];
+}
+
+export interface SimulationResult {
+  monthlySavings: number;
+  projectedSavings: number;
+  months: number;
+  monthlyIncome: number;
+  monthlyExpenses: number;
+  adjustedMonthlyExpenses: number;
+  currentSavings: number;
+  baselineProjectedSavings?: number;
+  differenceFromBaseline?: number;
+}
