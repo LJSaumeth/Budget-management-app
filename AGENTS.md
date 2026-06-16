@@ -56,8 +56,8 @@ Feature plans from the DOCS map to feature directories under `frontend/src/`:
 
 | Feature (plan) | Directory | Status | Depends on |
 |---|---|---|---|
-| foundation | `frontend/` (scaffold + theme) | Not started | — |
-| budget-core | `frontend/src/pages/DashboardPage.tsx`, `BudgetDetailPage.tsx` | Not started | foundation |
+| foundation | `frontend/` (scaffold + theme) | Done | — |
+| budget-core | `frontend/src/pages/DashboardPage.tsx`, `BudgetDetailPage.tsx` | Done | foundation |
 | exchange | `frontend/src/pages/ExchangePage.tsx` | Not started | foundation |
 | history | `frontend/src/pages/HistoryPage.tsx` | Not started | foundation, budget-core |
 | limits | `frontend/src/pages/LimitsPage.tsx` | Not started | foundation, budget-core |
